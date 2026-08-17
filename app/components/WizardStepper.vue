@@ -1,10 +1,14 @@
 <script setup lang="ts">
+import geographyIcon from '~/assets/images/geography.svg'
+import identityIcon from '~/assets/images/identity.svg'
+import verificationIcon from '~/assets/images/verification.svg'
+
 defineProps<{ currentStep: number }>()
 
 const steps = [
-  { label: 'Geography', icon: '◎' },
-  { label: 'Identity', icon: '▣' },
-  { label: 'Verification', icon: '●' }
+  { label: 'Geography', icon: geographyIcon },
+  { label: 'Identity', icon: identityIcon },
+  { label: 'Verification', icon: verificationIcon }
 ]
 </script>
 
@@ -16,7 +20,9 @@ const steps = [
         :class="{ 'text-primary-700': currentStep >= index + 1 }"
         :aria-current="currentStep === index + 1 ? 'step' : undefined"
       >
-        <span class="grid size-7 place-items-center rounded-full bg-primary-100 text-[17px] text-white" :class="{ '!bg-primary-700': currentStep >= index + 1 }" aria-hidden="true">{{ step.icon }}</span>
+        <span class="grid size-7 place-items-center rounded-full bg-primary-100" :class="{ '!bg-primary-700': currentStep >= index + 1 }" aria-hidden="true">
+          <img class="size-5" :src="step.icon" alt="">
+        </span>
         <span class="max-sm:hidden">{{ step.label }}</span>
       </div>
       <span v-if="index < steps.length - 1" class="min-w-9 flex-1 border-t border-dashed border-primary-200 max-sm:min-w-5" aria-hidden="true" />
