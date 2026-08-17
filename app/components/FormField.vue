@@ -20,7 +20,7 @@ const emit = defineEmits<{ 'update:modelValue': [value: string] }>()
 <template>
   <div class="min-w-0">
     <label class="mb-1.5 block font-medium" :for="id">{{ label }}</label>
-    <div class="flex min-h-[58px] overflow-hidden rounded-[10px] border border-zinc-200 bg-white shadow-card focus-within:border-primary-600 focus-within:ring-4 focus-within:ring-primary-600/10" :class="{ '!border-error-500': error }">
+    <div class="flex min-h-[58px] overflow-hidden rounded-[10px] border border-zinc-200 bg-white shadow-card focus-within:border-primary-600" :class="{ '!border-error-500': error }">
       <div v-if="prefix" class="flex items-center gap-2 whitespace-nowrap pl-3.5 text-zinc-700" aria-hidden="true">
         <img v-if="flagUrl" class="size-6 rounded-full object-cover" :src="flagUrl" alt="">
         <span>{{ prefix }}</span>
