@@ -3,7 +3,7 @@ import type { Country, VisaFormData } from '~/types/visa'
 
 const { countries, pending, error: countriesError, loadCountries } = useCountries()
 const { currentStep, form, errors, clearError, next, back, reset } = useVisaWizard()
-const { submit } = useApplications()
+const { applications, hydrate, submit } = useApplications()
 const submissionMessage = ref('')
 
 function setCountry(field: 'citizenship' | 'destination', country: Country) {
@@ -23,7 +23,10 @@ function submitApplication() {
   window.setTimeout(() => { submissionMessage.value = '' }, 4000)
 }
 
-onMounted(() => loadCountries())
+onMounted(() => {
+  loadCountries()
+  hydrate()
+})
 </script>
 
 <template>
@@ -68,6 +71,7 @@ onMounted(() => loadCountries())
           />
         </Transition>
       </section>
+      <ApplicationsList :applications="applications" />
     </main>
   </div>
 </template>

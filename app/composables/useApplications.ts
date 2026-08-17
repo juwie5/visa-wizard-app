@@ -1,9 +1,25 @@
 import type { ApplicationStatus, VisaApplication, VisaFormData } from '~/types/visa'
 
 const statuses: ApplicationStatus[] = ['Pending', 'Approved', 'Rejected']
+const STORAGE_KEY = 'visa-wizard-applications'
 
 export function useApplications() {
   const applications = useState<VisaApplication[]>('visa-applications', () => [])
+
+  function hydrate() {
+    if (!import.meta.client) return
+    try {
+      const stored = sessionStorage.getItem(STORAGE_KEY)
+      applications.value = stored ? JSON.parse(stored) as VisaApplication[] : []
+    } catch {
+      applications.value = []
+      sessionStorage.removeItem(STORAGE_KEY)
+    }
+  }
+
+  function persist() {
+    if (import.meta.client) sessionStorage.setItem(STORAGE_KEY, JSON.stringify(applications.value))
+  }
 
   function submit(form: VisaFormData): VisaApplication {
     if (!form.citizenship || !form.destination) throw new Error('Country selections are required.')
@@ -23,8 +39,9 @@ export function useApplications() {
       }
     }
     applications.value.unshift(application)
+    persist()
     return application
   }
 
-  return { applications, submit }
+  return { applications, hydrate, submit }
 }
