@@ -23,4 +23,20 @@ describe('CountryDropdown', () => {
     await wrapper.get('.select-control').trigger('click')
     expect(wrapper.findAll('.option')[0]?.attributes('disabled')).toBeDefined()
   })
+
+  it('shows countries beyond the first page of alphabetical results', async () => {
+    const countries = Array.from({ length: 50 }, (_, index) => ({
+      ...canada,
+      code: `C${index}`,
+      name: `Country ${String(index).padStart(2, '0')}`
+    }))
+
+    const wrapper = await mountSuspended(CountryDropdown, {
+      props: { id: 'citizenship', label: 'Citizenship', countries: [...countries, unitedStates], modelValue: null }
+    })
+    await wrapper.get('.select-control').trigger('click')
+
+    expect(wrapper.text()).toContain('United States')
+    expect(wrapper.findAll('.option')).toHaveLength(51)
+  })
 })

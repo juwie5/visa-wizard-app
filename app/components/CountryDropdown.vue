@@ -22,7 +22,7 @@ const query = ref('')
 const open = ref(false)
 const activeIndex = ref(0)
 
-const results = computed(() => searchCountries(props.countries, query.value).slice(0, 50))
+const results = computed(() => searchCountries(props.countries, query.value))
 
 function select(country: Country) {
   if (country.code === props.disabledCode) return
