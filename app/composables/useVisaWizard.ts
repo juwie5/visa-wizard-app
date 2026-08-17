@@ -9,6 +9,7 @@ function emptyForm(): VisaFormData {
     fullName: '',
     email: '',
     phone: '',
+    phoneCountry: null,
     dateOfBirth: '',
     passportNumber: ''
   }

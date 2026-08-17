@@ -34,6 +34,7 @@ export function useApplications() {
         fullName: form.fullName.trim(),
         email: form.email.trim(),
         phone: form.phone.trim(),
+        phoneCountry: form.phoneCountry,
         dateOfBirth: form.dateOfBirth,
         passportNumber: form.passportNumber.trim().toUpperCase()
       }

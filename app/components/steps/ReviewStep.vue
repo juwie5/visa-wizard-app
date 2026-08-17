@@ -17,7 +17,7 @@ const emit = defineEmits<{ back: [], submit: [] }>()
         <dl class="m-0 rounded-[10px] border border-zinc-200 bg-zinc-50 p-4 [&>div:last-child]:mb-0">
           <div class="mb-2 flex justify-between gap-4"><dt class="text-zinc-500">Name</dt><dd class="m-0 text-right font-semibold [overflow-wrap:anywhere]">{{ form.fullName }}</dd></div>
           <div class="mb-2 flex justify-between gap-4"><dt class="text-zinc-500">Email</dt><dd class="m-0 text-right font-semibold [overflow-wrap:anywhere]">{{ form.email }}</dd></div>
-          <div class="mb-2 flex justify-between gap-4"><dt class="text-zinc-500">Phone</dt><dd class="m-0 text-right font-semibold [overflow-wrap:anywhere]">{{ form.citizenship.callingCode }} {{ form.phone }}</dd></div>
+          <div class="mb-2 flex justify-between gap-4"><dt class="text-zinc-500">Phone</dt><dd class="m-0 text-right font-semibold [overflow-wrap:anywhere]">{{ form.phoneCountry?.callingCode || form.citizenship.callingCode }} {{ form.phone }}</dd></div>
           <div class="mb-2 flex justify-between gap-4"><dt class="text-zinc-500">DOB</dt><dd class="m-0 text-right font-semibold [overflow-wrap:anywhere]">{{ formatDate(form.dateOfBirth) }}</dd></div>
           <div class="mb-2 flex justify-between gap-4"><dt class="text-zinc-500">Passport</dt><dd class="m-0 text-right font-semibold [overflow-wrap:anywhere]">{{ form.passportNumber.toUpperCase() }}</dd></div>
         </dl>

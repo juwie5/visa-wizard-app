@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import type { FieldErrors, VisaFormData } from '~/types/visa'
+import type { Country, FieldErrors, VisaFormData } from '~/types/visa'
 
-const props = defineProps<{ form: VisaFormData, errors: FieldErrors }>()
+defineProps<{ form: VisaFormData, errors: FieldErrors, countries: Country[], countriesPending: boolean }>()
 const emit = defineEmits<{
   update: [field: keyof VisaFormData, value: string]
+  'update:phoneCountry': [country: Country]
   back: []
   continue: []
 }>()
@@ -15,18 +16,16 @@ interface PersonalField {
   type?: string
   autocomplete?: string
   placeholder?: string
-  prefix?: string
-  flagUrl?: string
   max?: string
 }
 
-const fields = computed<PersonalField[]>(() => [
+const fields: PersonalField[] = [
   { key: 'fullName', label: 'Full Name', autocomplete: 'name', placeholder: 'Enter full name' },
   { key: 'email', label: 'Email Address', type: 'email', autocomplete: 'email', placeholder: 'you@example.com' },
-  { key: 'phone', label: 'Phone Number', type: 'tel', autocomplete: 'tel-national', placeholder: 'Phone number', prefix: props.form.citizenship?.callingCode || '+', flagUrl: props.form.citizenship?.flagUrl },
+  { key: 'phone', label: 'Phone Number', type: 'tel', autocomplete: 'tel-national', placeholder: 'Phone number' },
   { key: 'dateOfBirth', label: 'Date of Birth', type: 'date', autocomplete: 'bday', max: today },
   { key: 'passportNumber', label: 'Passport Number', autocomplete: 'off', placeholder: 'Enter passport number' }
-])
+]
 </script>
 
 <template>
@@ -37,21 +36,32 @@ const fields = computed<PersonalField[]>(() => [
         <p class="m-0">Please provide accurate information as it appears on your official documents.</p>
       </header>
       <div class="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
-        <FormField
-          v-for="field in fields"
-          :id="field.key"
-          :key="field.key"
-          :label="field.label"
-          :model-value="String(form[field.key] ?? '')"
-          :type="field.type"
-          :placeholder="field.placeholder"
-          :autocomplete="field.autocomplete"
-          :prefix="field.prefix"
-          :flag-url="field.flagUrl"
-          :max="field.max"
-          :error="errors[field.key]"
-          @update:model-value="emit('update', field.key, $event)"
-        />
+        <template v-for="field in fields" :key="field.key">
+          <PhoneField
+            v-if="field.key === 'phone'"
+            :id="field.key"
+            :label="field.label"
+            :model-value="form.phone"
+            :countries="countries"
+            :selected-country="form.phoneCountry || form.citizenship"
+            :pending="countriesPending"
+            :error="errors.phone"
+            @update:model-value="emit('update', 'phone', $event)"
+            @update:selected-country="emit('update:phoneCountry', $event)"
+          />
+          <FormField
+            v-else
+            :id="field.key"
+            :label="field.label"
+            :model-value="String(form[field.key] ?? '')"
+            :type="field.type"
+            :placeholder="field.placeholder"
+            :autocomplete="field.autocomplete"
+            :max="field.max"
+            :error="errors[field.key]"
+            @update:model-value="emit('update', field.key, $event)"
+          />
+        </template>
       </div>
     </div>
     <footer class="flex min-h-[84px] justify-between border-t border-zinc-100 px-7 py-4">

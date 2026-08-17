@@ -9,6 +9,7 @@ const validForm: VisaFormData = {
   fullName: 'Ada Lovelace',
   email: 'ada@example.com',
   phone: '802 123 4567',
+  phoneCountry: canada,
   dateOfBirth: '1990-01-01',
   passportNumber: 'A1234567'
 }

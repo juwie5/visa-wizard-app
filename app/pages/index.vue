@@ -7,8 +7,16 @@ const { applications, hydrate, submit } = useApplications()
 const submissionMessage = ref('')
 
 function setCountry(field: 'citizenship' | 'destination', country: Country) {
+  const previousCitizenship = form.citizenship
   form[field] = country
+  if (field === 'citizenship' && (!form.phoneCountry || form.phoneCountry.code === previousCitizenship?.code)) {
+    form.phoneCountry = country
+  }
   clearError(field)
+}
+
+function setPhoneCountry(country: Country) {
+  form.phoneCountry = country
 }
 
 function setPersonalField(field: keyof VisaFormData, value: string) {
@@ -58,7 +66,10 @@ onMounted(() => {
             key="personal"
             :form="form"
             :errors="errors"
+            :countries="countries"
+            :countries-pending="pending"
             @update="setPersonalField"
+            @update:phone-country="setPhoneCountry"
             @back="back"
             @continue="next"
           />
