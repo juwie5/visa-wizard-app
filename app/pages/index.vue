@@ -41,7 +41,7 @@ onMounted(() => {
           <button class="border-0 bg-transparent font-bold text-inherit" type="button" @click="loadCountries(true)">Retry</button>
         </div>
         <Transition enter-active-class="transition duration-200" enter-from-class="translate-x-2.5 opacity-0" leave-active-class="transition duration-200" leave-to-class="-translate-x-2.5 opacity-0" mode="out-in">
-          <GeographyStep
+          <StepsGeographyStep
             v-if="currentStep === 1"
             key="geography"
           :countries="countries"
@@ -53,7 +53,7 @@ onMounted(() => {
             @update:destination="setCountry('destination', $event)"
             @continue="next"
           />
-          <PersonalDetailsStep
+          <StepsPersonalDetailsStep
             v-else-if="currentStep === 2"
             key="personal"
             :form="form"
@@ -62,7 +62,7 @@ onMounted(() => {
             @back="back"
             @continue="next"
           />
-          <ReviewStep
+          <StepsReviewStep
             v-else
             key="review"
             :form="form"
