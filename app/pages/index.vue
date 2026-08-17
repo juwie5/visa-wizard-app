@@ -2,7 +2,9 @@
 import type { Country, VisaFormData } from '~/types/visa'
 
 const { countries, pending, error: countriesError, loadCountries } = useCountries()
-const { currentStep, form, errors, clearError, next, back } = useVisaWizard()
+const { currentStep, form, errors, clearError, next, back, reset } = useVisaWizard()
+const { submit } = useApplications()
+const submissionMessage = ref('')
 
 function setCountry(field: 'citizenship' | 'destination', country: Country) {
   form[field] = country
@@ -14,6 +16,13 @@ function setPersonalField(field: keyof VisaFormData, value: string) {
   clearError(field)
 }
 
+function submitApplication() {
+  submit(form)
+  reset()
+  submissionMessage.value = 'Application submitted successfully.'
+  window.setTimeout(() => { submissionMessage.value = '' }, 4000)
+}
+
 onMounted(() => loadCountries())
 </script>
 
@@ -21,6 +30,7 @@ onMounted(() => loadCountries())
   <div class="app-shell">
     <AppHeader />
     <main class="page-content">
+      <p v-if="submissionMessage" class="success-message" role="status">✓ {{ submissionMessage }}</p>
       <section class="wizard-card" aria-labelledby="wizard-heading">
         <WizardStepper :current-step="currentStep" />
         <div v-if="countriesError" class="api-error" role="alert">
@@ -49,6 +59,13 @@ onMounted(() => loadCountries())
             @back="back"
             @continue="next"
           />
+          <ReviewStep
+            v-else
+            key="review"
+            :form="form"
+            @back="back"
+            @submit="submitApplication"
+          />
         </Transition>
       </section>
     </main>
@@ -67,6 +84,15 @@ onMounted(() => loadCountries())
   border: 1px solid var(--gray-200);
   border-radius: 16px;
   box-shadow: var(--shadow-card);
+}
+
+.success-message {
+  margin: 0 0 16px;
+  padding: 12px 16px;
+  color: var(--success-700);
+  background: var(--success-50);
+  border: 1px solid #a6f4c5;
+  border-radius: 8px;
 }
 
 .api-error {

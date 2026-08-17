@@ -49,3 +49,8 @@ export function formatPopulation(value: number): string {
 export function formatLanguages(languages: string[]): string {
   return languages.length ? languages.join(', ') : 'Not listed'
 }
+
+export function formatDate(value: string): string {
+  if (!value) return 'Not provided'
+  return new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(`${value}T00:00:00`))
+}
