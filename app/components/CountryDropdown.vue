@@ -115,7 +115,7 @@ onBeforeUnmount(() => document.removeEventListener('mousedown', closeOnOutside))
               @click="select(country)"
             >
               <img class="size-6 rounded-full object-cover" :src="country.flagUrl" :alt="country.flagAlt">
-              <span class="flex min-w-0 flex-col"><strong class="truncate font-medium">{{ country.name }}</strong><small class="text-[11px] text-zinc-500">{{ country.capital }}</small></span>
+              <strong class="min-w-0 truncate font-medium">{{ country.name }}</strong>
               <span v-if="country.code === disabledCode" class="ml-auto text-[11px] text-zinc-500">Selected</span>
             </button>
           </div>

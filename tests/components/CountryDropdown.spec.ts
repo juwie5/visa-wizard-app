@@ -11,6 +11,7 @@ describe('CountryDropdown', () => {
     await wrapper.get('.select-control').trigger('click')
     await wrapper.get('input').setValue('Grmany')
     expect(wrapper.text()).toContain('Germany')
+    expect(wrapper.text()).not.toContain('Berlin')
     await wrapper.get('.option').trigger('click')
     expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([germany])
   })
