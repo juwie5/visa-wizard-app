@@ -2,7 +2,7 @@ import type { FieldErrors, VisaFormData } from '~/types/visa'
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const PHONE_PATTERN = /^[0-9 ()-]{6,20}$/
-const PASSPORT_PATTERN = /^[A-Za-z0-9]{5,20}$/
+const PASSPORT_PATTERN = /^[A-Za-z0-9-]{5,20}$/
 
 export function validateGeography(form: VisaFormData): FieldErrors {
   const errors: FieldErrors = {}
@@ -26,6 +26,6 @@ export function validatePersonalDetails(form: VisaFormData, today = new Date()):
   else if (Number.isNaN(Date.parse(form.dateOfBirth))) errors.dateOfBirth = 'Enter a valid date'
   else if (new Date(`${form.dateOfBirth}T00:00:00`) >= today) errors.dateOfBirth = 'Date of birth must be in the past'
   if (!form.passportNumber.trim()) errors.passportNumber = 'Passport number is required'
-  else if (!PASSPORT_PATTERN.test(form.passportNumber)) errors.passportNumber = 'Use 5–20 letters or numbers'
+  else if (!PASSPORT_PATTERN.test(form.passportNumber)) errors.passportNumber = 'Use 5–20 letters, numbers, or hyphens'
   return errors
 }
