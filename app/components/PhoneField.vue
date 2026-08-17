@@ -76,7 +76,6 @@ onBeforeUnmount(() => document.removeEventListener('mousedown', closeOnOutside))
       >
         <img v-if="selectedCountry" class="size-6 rounded-full object-cover" :src="selectedCountry.flagUrl" :alt="selectedCountry.flagAlt">
         <span>{{ selectedCountry?.callingCode || '+' }}</span>
-        <span class="size-0 border-x-4 border-t-[5px] border-x-transparent border-t-zinc-500" aria-hidden="true" />
       </button>
       <input
         :id="id"
