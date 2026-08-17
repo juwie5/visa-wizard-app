@@ -1,8 +1,6 @@
 import type { RestCountry } from '~/types/visa'
 import { normalizeCountries } from '~/utils/countries'
 
-const COUNTRIES_ENDPOINT = 'https://restcountries.com/v3.1/all?fields=name,capital,flags,region,population,languages,idd,cca3'
-
 export function useCountries() {
   const countries = useState('countries', () => normalizeCountries([]))
   const pending = useState('countries-pending', () => false)
@@ -15,7 +13,7 @@ export function useCountries() {
     pending.value = true
     error.value = null
     try {
-      const payload = await $fetch<RestCountry[]>(COUNTRIES_ENDPOINT)
+      const payload = await $fetch<RestCountry[]>('/api/countries')
       countries.value = normalizeCountries(payload)
       loaded.value = true
       if (!countries.value.length) throw new Error('No countries were returned.')

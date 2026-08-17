@@ -3,6 +3,10 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
   modules: ['@nuxt/eslint'],
+  runtimeConfig: {
+    restCountriesApiKey: '',
+    restCountriesApiBase: 'https://api.restcountries.com/countries/v5'
+  },
   app: {
     head: {
       title: 'Visa Wizard',
