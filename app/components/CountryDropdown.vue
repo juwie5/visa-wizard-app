@@ -87,14 +87,14 @@ onBeforeUnmount(() => document.removeEventListener('mousedown', closeOnOutside))
       </button>
       <Transition enter-active-class="origin-top transition duration-150" enter-from-class="-translate-y-1 scale-[.99] opacity-0" leave-active-class="origin-top transition duration-150" leave-to-class="-translate-y-1 scale-[.99] opacity-0">
         <div v-if="open" class="absolute top-[calc(100%+6px)] z-20 w-full rounded-[10px] border border-zinc-200 bg-white p-2 shadow-dropdown">
-          <div class="flex items-center gap-2.5 rounded-md border border-zinc-200 px-2.5">
+          <div class="flex items-center gap-2.5 rounded-md border border-zinc-200 px-2.5 focus-within:border-primary-600">
             <span class="relative size-3.5 flex-none rounded-full border border-zinc-500 after:absolute after:-bottom-0.5 after:-right-1 after:w-1 after:rotate-45 after:border-t after:border-zinc-500" aria-hidden="true" />
             <input
               v-model="query"
               :aria-label="`Search ${label.toLowerCase()}`"
               placeholder="Search country..."
               autocomplete="off"
-              class="w-full border-0 py-2.5 outline-none"
+              class="w-full border-0 py-2.5 outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
               @keydown="onKeydown"
             >
           </div>
