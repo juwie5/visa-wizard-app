@@ -85,7 +85,7 @@ onBeforeUnmount(() => document.removeEventListener('mousedown', closeOnOutside))
         autocomplete="tel-national"
         :aria-invalid="Boolean(error)"
         :aria-describedby="error ? `${id}-error` : undefined"
-        class="w-full min-w-0 rounded-r-[9px] border-0 bg-transparent p-3.5 pl-1 text-black outline-none placeholder:text-zinc-400"
+        class="w-full min-w-0 rounded-r-[9px] border-0 bg-transparent p-3.5 pl-1 text-black outline-none placeholder:text-zinc-400 focus-visible:ring-0 focus-visible:ring-offset-0"
         @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
       >
     </div>
