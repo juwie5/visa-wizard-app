@@ -8,50 +8,32 @@ const emit = defineEmits<{ back: [], submit: [] }>()
 
 <template>
   <div v-if="form.citizenship && form.destination">
-    <div class="step-content">
-      <header>
-        <h1 id="wizard-heading">Review &amp; Confirm</h1>
-        <p>Final check of your application data before submission.</p>
+    <div class="px-7 pb-7 pt-[34px] max-sm:px-5 max-sm:py-7">
+      <header class="mb-[30px]">
+        <h1 id="wizard-heading" class="mb-1.5 text-2xl font-extrabold leading-[27px]">Review &amp; Confirm</h1>
+        <p class="m-0">Final check of your application data before submission.</p>
       </header>
-      <div class="review-grid">
-        <dl class="personal-summary">
-          <div><dt>Name</dt><dd>{{ form.fullName }}</dd></div>
-          <div><dt>Email</dt><dd>{{ form.email }}</dd></div>
-          <div><dt>Phone</dt><dd>{{ form.citizenship.callingCode }} {{ form.phone }}</dd></div>
-          <div><dt>DOB</dt><dd>{{ formatDate(form.dateOfBirth) }}</dd></div>
-          <div><dt>Passport</dt><dd>{{ form.passportNumber.toUpperCase() }}</dd></div>
+      <div class="grid grid-cols-[1.1fr_.9fr] gap-4 max-sm:grid-cols-1">
+        <dl class="m-0 rounded-[10px] border border-zinc-200 bg-zinc-50 p-4 [&>div:last-child]:mb-0">
+          <div class="mb-2 flex justify-between gap-4"><dt class="text-zinc-500">Name</dt><dd class="m-0 text-right font-semibold [overflow-wrap:anywhere]">{{ form.fullName }}</dd></div>
+          <div class="mb-2 flex justify-between gap-4"><dt class="text-zinc-500">Email</dt><dd class="m-0 text-right font-semibold [overflow-wrap:anywhere]">{{ form.email }}</dd></div>
+          <div class="mb-2 flex justify-between gap-4"><dt class="text-zinc-500">Phone</dt><dd class="m-0 text-right font-semibold [overflow-wrap:anywhere]">{{ form.citizenship.callingCode }} {{ form.phone }}</dd></div>
+          <div class="mb-2 flex justify-between gap-4"><dt class="text-zinc-500">DOB</dt><dd class="m-0 text-right font-semibold [overflow-wrap:anywhere]">{{ formatDate(form.dateOfBirth) }}</dd></div>
+          <div class="mb-2 flex justify-between gap-4"><dt class="text-zinc-500">Passport</dt><dd class="m-0 text-right font-semibold [overflow-wrap:anywhere]">{{ form.passportNumber.toUpperCase() }}</dd></div>
         </dl>
-        <div class="country-list">
+        <div class="grid gap-2.5">
           <CountrySummary label="Citizenship" :country="form.citizenship" />
           <CountrySummary label="Destination" :country="form.destination" />
         </div>
       </div>
-      <div class="notice" role="note">
-        <span aria-hidden="true">i</span>
-        <p>By clicking “Submit Application”, you confirm that all provided information is true and accurate. False information may result in immediate rejection.</p>
+      <div class="mt-4 flex items-start gap-3 rounded-md border border-info-200 bg-info-50 p-3 text-xs" role="note">
+        <span class="grid size-[18px] flex-none place-items-center rounded-full bg-info-500 font-bold text-white" aria-hidden="true">i</span>
+        <p class="m-0">By clicking “Submit Application”, you confirm that all provided information is true and accurate. False information may result in immediate rejection.</p>
       </div>
     </div>
-    <footer class="wizard-actions">
+    <footer class="flex min-h-20 justify-between border-t border-zinc-100 px-7 py-4">
       <BaseButton icon-only label="Back to personal details" @click="emit('back')">‹</BaseButton>
       <BaseButton @click="emit('submit')">Submit Application <span aria-hidden="true">›</span></BaseButton>
     </footer>
   </div>
 </template>
-
-<style scoped>
-.step-content { padding: 34px 28px 28px; }
-header { margin-bottom: 30px; }
-h1 { margin: 0 0 6px; font-size: 24px; font-weight: 800; line-height: 27px; }
-p { margin: 0; }
-.review-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 16px; }
-.personal-summary { margin: 0; padding: 16px; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 10px; }
-.personal-summary div { display: flex; justify-content: space-between; gap: 16px; margin-bottom: 8px; }
-.personal-summary div:last-child { margin-bottom: 0; }
-dt { color: var(--gray-500); }
-dd { overflow-wrap: anywhere; margin: 0; text-align: right; font-weight: 600; }
-.country-list { display: grid; gap: 10px; }
-.notice { display: flex; align-items: flex-start; gap: 12px; margin-top: 16px; padding: 12px; background: var(--info-50); border: 1px solid #b2ddff; border-radius: 6px; font-size: 12px; }
-.notice > span { display: grid; width: 18px; height: 18px; flex: none; color: var(--white); background: var(--info-500); border-radius: 50%; place-items: center; font-weight: 700; }
-.wizard-actions { display: flex; justify-content: space-between; min-height: 80px; padding: 16px 28px; border-top: 1px solid var(--gray-100); }
-@media (max-width: 640px) { .review-grid { grid-template-columns: 1fr; } .step-content { padding: 28px 20px; } }
-</style>

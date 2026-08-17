@@ -15,49 +15,11 @@ withDefaults(defineProps<{
 <template>
   <button
     :type="type"
-    class="base-button"
-    :class="{ 'icon-only': iconOnly }"
+    class="inline-flex min-h-12 items-center justify-center rounded-[28px] border-0 bg-primary-600 px-[18px] py-3 font-display text-base font-medium leading-5 text-white transition duration-150 hover:-translate-y-px hover:bg-primary-700 disabled:translate-y-0 disabled:bg-zinc-100 disabled:text-zinc-400"
+    :class="{ '!min-h-[52px] !w-[52px] !border !border-zinc-200 !bg-white !p-0 !text-zinc-700 hover:!bg-zinc-50': iconOnly }"
     :disabled="disabled"
     :aria-label="iconOnly ? label : undefined"
   >
     <slot />
   </button>
 </template>
-
-<style scoped>
-.base-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 48px;
-  padding: 12px 18px;
-  color: var(--white);
-  background: var(--primary-600);
-  border: 0;
-  border-radius: 28px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 20px;
-  transition: background-color 160ms ease, transform 160ms ease;
-}
-
-.base-button:hover:not(:disabled) {
-  background: var(--primary-700);
-  transform: translateY(-1px);
-}
-
-.base-button:disabled {
-  color: var(--gray-400);
-  background: var(--gray-100);
-}
-
-.base-button.icon-only {
-  width: 52px;
-  min-height: 52px;
-  padding: 0;
-  color: var(--gray-700);
-  background: var(--white);
-  border: 1px solid var(--gray-200);
-}
-</style>

@@ -30,17 +30,17 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="app-shell">
+  <div>
     <AppHeader />
-    <main class="page-content">
-      <p v-if="submissionMessage" class="success-message" role="status">✓ {{ submissionMessage }}</p>
-      <section class="wizard-card" aria-labelledby="wizard-heading">
+    <main class="mx-auto my-11 w-[min(880px,calc(100%-40px))]">
+      <p v-if="submissionMessage" class="mb-4 rounded-lg border border-success-200 bg-success-50 px-4 py-3 text-success-700" role="status">✓ {{ submissionMessage }}</p>
+      <section class="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-card" aria-labelledby="wizard-heading">
         <WizardStepper :current-step="currentStep" />
-        <div v-if="countriesError" class="api-error" role="alert">
+        <div v-if="countriesError" class="flex items-center justify-between bg-error-50 px-7 py-3 text-error-600" role="alert">
           <span>{{ countriesError }}</span>
-          <button type="button" @click="loadCountries(true)">Retry</button>
+          <button class="border-0 bg-transparent font-bold text-inherit" type="button" @click="loadCountries(true)">Retry</button>
         </div>
-        <Transition name="step" mode="out-in">
+        <Transition enter-active-class="transition duration-200" enter-from-class="translate-x-2.5 opacity-0" leave-active-class="transition duration-200" leave-to-class="-translate-x-2.5 opacity-0" mode="out-in">
           <GeographyStep
             v-if="currentStep === 1"
             key="geography"
@@ -75,48 +75,3 @@ onMounted(() => {
     </main>
   </div>
 </template>
-
-<style scoped>
-.page-content {
-  width: min(880px, calc(100% - 40px));
-  margin: 44px auto;
-}
-
-.wizard-card {
-  overflow: hidden;
-  background: var(--white);
-  border: 1px solid var(--gray-200);
-  border-radius: 16px;
-  box-shadow: var(--shadow-card);
-}
-
-.success-message {
-  margin: 0 0 16px;
-  padding: 12px 16px;
-  color: var(--success-700);
-  background: var(--success-50);
-  border: 1px solid #a6f4c5;
-  border-radius: 8px;
-}
-
-.api-error {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 28px;
-  color: var(--error-600);
-  background: var(--error-50);
-}
-
-.api-error button {
-  color: inherit;
-  background: transparent;
-  border: 0;
-  font-weight: 700;
-}
-
-.step-enter-active,
-.step-leave-active { transition: opacity 180ms ease, transform 180ms ease; }
-.step-enter-from { opacity: 0; transform: translateX(10px); }
-.step-leave-to { opacity: 0; transform: translateX(-10px); }
-</style>

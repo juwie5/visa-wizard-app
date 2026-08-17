@@ -63,14 +63,14 @@ onBeforeUnmount(() => document.removeEventListener('mousedown', closeOnOutside))
 </script>
 
 <template>
-  <div ref="root" class="country-select">
-    <label :for="id">{{ label }}</label>
-    <div class="control-wrap">
+  <div ref="root" class="relative min-w-0">
+    <label class="mb-1.5 block font-medium" :for="id">{{ label }}</label>
+    <div class="relative">
       <button
         :id="id"
         type="button"
-        class="select-control"
-        :class="{ invalid: error }"
+        class="select-control flex min-h-[58px] w-full items-center rounded-[10px] border border-zinc-200 bg-white px-3.5 py-2 text-left text-black shadow-card"
+        :class="{ '!border-error-500': error }"
         :aria-expanded="open"
         :aria-controls="`${id}-listbox`"
         :aria-describedby="error ? `${id}-error` : undefined"
@@ -78,82 +78,50 @@ onBeforeUnmount(() => document.removeEventListener('mousedown', closeOnOutside))
         @click="open = !open"
         @keydown="onKeydown"
       >
-        <span v-if="modelValue" class="selection">
-          <img :src="modelValue.flagUrl" :alt="modelValue.flagAlt">
-          <span><strong>{{ modelValue.name }}</strong><small>{{ modelValue.capital }}</small></span>
+        <span v-if="modelValue" class="flex min-w-0 items-center gap-2.5">
+          <img class="size-6 rounded-full object-cover" :src="modelValue.flagUrl" :alt="modelValue.flagAlt">
+          <span class="flex min-w-0 flex-col"><strong class="truncate font-medium">{{ modelValue.name }}</strong><small class="text-[11px] text-zinc-500">{{ modelValue.capital }}</small></span>
         </span>
-        <span v-else class="placeholder">Select a country...</span>
-        <span class="search-icon" aria-hidden="true" />
+        <span v-else class="text-zinc-400">Select a country...</span>
+        <span class="relative ml-auto size-[18px] flex-none rounded-full border-[1.5px] border-zinc-500 after:absolute after:-bottom-0.5 after:-right-1 after:w-1.5 after:rotate-45 after:border-t-[1.5px] after:border-zinc-500" aria-hidden="true" />
       </button>
-      <Transition name="dropdown">
-        <div v-if="open" class="dropdown-panel">
-          <div class="search-row">
-            <span class="search-icon" aria-hidden="true" />
+      <Transition enter-active-class="origin-top transition duration-150" enter-from-class="-translate-y-1 scale-[.99] opacity-0" leave-active-class="origin-top transition duration-150" leave-to-class="-translate-y-1 scale-[.99] opacity-0">
+        <div v-if="open" class="absolute top-[calc(100%+6px)] z-20 w-full rounded-[10px] border border-zinc-200 bg-white p-2 shadow-dropdown">
+          <div class="flex items-center gap-2.5 rounded-md border border-zinc-200 px-2.5">
+            <span class="relative size-3.5 flex-none rounded-full border border-zinc-500 after:absolute after:-bottom-0.5 after:-right-1 after:w-1 after:rotate-45 after:border-t after:border-zinc-500" aria-hidden="true" />
             <input
               v-model="query"
               :aria-label="`Search ${label.toLowerCase()}`"
               placeholder="Search country..."
               autocomplete="off"
+              class="w-full border-0 py-2.5 outline-none"
               @keydown="onKeydown"
             >
           </div>
-          <div :id="`${id}-listbox`" class="options" role="listbox">
-            <p v-if="pending" class="state-message">Loading countries…</p>
-            <p v-else-if="!results.length" class="state-message">No countries found.</p>
+          <div :id="`${id}-listbox`" class="mt-1.5 max-h-[230px] overflow-y-auto" role="listbox">
+            <p v-if="pending" class="m-0 p-4 text-center text-zinc-500">Loading countries…</p>
+            <p v-else-if="!results.length" class="m-0 p-4 text-center text-zinc-500">No countries found.</p>
             <button
               v-for="(country, index) in results"
               v-else
               :key="country.code"
               type="button"
               role="option"
-              class="option"
-              :class="{ active: index === activeIndex }"
+              class="option flex min-h-12 w-full min-w-0 items-center gap-2.5 rounded-md border-0 bg-transparent px-2.5 py-1.5 text-left hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-[.45]"
+              :class="{ 'bg-zinc-100': index === activeIndex }"
               :disabled="country.code === disabledCode"
               :aria-selected="modelValue?.code === country.code"
               @mouseenter="activeIndex = index"
               @click="select(country)"
             >
-              <img :src="country.flagUrl" :alt="country.flagAlt">
-              <span><strong>{{ country.name }}</strong><small>{{ country.capital }}</small></span>
-              <span v-if="country.code === disabledCode" class="unavailable">Selected</span>
+              <img class="size-6 rounded-full object-cover" :src="country.flagUrl" :alt="country.flagAlt">
+              <span class="flex min-w-0 flex-col"><strong class="truncate font-medium">{{ country.name }}</strong><small class="text-[11px] text-zinc-500">{{ country.capital }}</small></span>
+              <span v-if="country.code === disabledCode" class="ml-auto text-[11px] text-zinc-500">Selected</span>
             </button>
           </div>
         </div>
       </Transition>
     </div>
-    <p v-if="error" :id="`${id}-error`" class="field-error">{{ error }}</p>
+    <p v-if="error" :id="`${id}-error`" class="mt-1.5 text-xs text-error-600">{{ error }}</p>
   </div>
 </template>
-
-<style scoped>
-.country-select { position: relative; min-width: 0; }
-label { display: block; margin-bottom: 6px; font-weight: 500; }
-.control-wrap { position: relative; }
-.select-control {
-  display: flex; width: 100%; min-height: 58px; padding: 8px 14px; align-items: center;
-  text-align: left; color: var(--black); background: var(--white); border: 1px solid var(--gray-200);
-  border-radius: 10px; box-shadow: var(--shadow-card);
-}
-.select-control.invalid { border-color: var(--error-500); }
-.placeholder { color: var(--gray-400); }
-.selection, .option { display: flex; align-items: center; gap: 10px; min-width: 0; }
-.selection img, .option img { width: 24px; height: 24px; object-fit: cover; border-radius: 50%; }
-.selection span, .option span { display: flex; flex-direction: column; min-width: 0; }
-.selection strong, .option strong { overflow: hidden; font-weight: 500; text-overflow: ellipsis; white-space: nowrap; }
-small { color: var(--gray-500); font-size: 11px; }
-.search-icon { width: 18px; height: 18px; margin-left: auto; border: 1.5px solid var(--gray-500); border-radius: 50%; position: relative; flex: none; }
-.search-icon::after { content: ''; position: absolute; width: 6px; border-top: 1.5px solid var(--gray-500); right: -4px; bottom: -2px; transform: rotate(45deg); }
-.dropdown-panel { position: absolute; z-index: 20; top: calc(100% + 6px); width: 100%; padding: 8px; background: var(--white); border: 1px solid var(--gray-200); border-radius: 10px; box-shadow: 0 4px 10px rgb(0 0 0 / 9%); }
-.search-row { display: flex; align-items: center; gap: 10px; padding: 0 10px; border: 1px solid var(--gray-200); border-radius: 6px; }
-.search-row .search-icon { margin: 0; transform: scale(.75); }
-.search-row input { width: 100%; padding: 10px 0; border: 0; outline: 0; }
-.options { max-height: 230px; overflow-y: auto; margin-top: 6px; }
-.option { width: 100%; min-height: 48px; padding: 6px 10px; text-align: left; background: transparent; border: 0; border-radius: 6px; }
-.option:hover, .option.active { background: var(--gray-100); }
-.option:disabled { opacity: .45; cursor: not-allowed; }
-.unavailable { margin-left: auto; color: var(--gray-500); font-size: 11px; }
-.state-message { margin: 0; padding: 16px; color: var(--gray-500); text-align: center; }
-.field-error { margin: 6px 0 0; color: var(--error-600); font-size: 12px; }
-.dropdown-enter-active, .dropdown-leave-active { transition: opacity 140ms ease, transform 140ms ease; transform-origin: top; }
-.dropdown-enter-from, .dropdown-leave-to { opacity: 0; transform: translateY(-4px) scale(.99); }
-</style>

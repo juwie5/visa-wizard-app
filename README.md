@@ -1,6 +1,6 @@
 # Visa Application Wizard
 
-A responsive multi-step travel visa application built with Nuxt 4, Vue 3, and TypeScript. The interface follows the supplied Figma design and loads live country data from REST Countries.
+A responsive multi-step travel visa application built with Nuxt 4, Vue 3, TypeScript, and Tailwind CSS. The interface follows the supplied Figma design and loads live country data from REST Countries.
 
 ## Features
 

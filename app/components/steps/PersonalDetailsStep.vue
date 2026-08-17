@@ -31,12 +31,12 @@ const fields = computed<PersonalField[]>(() => [
 
 <template>
   <div>
-    <div class="step-content">
-      <header>
-        <h1 id="wizard-heading">Personal Details</h1>
-        <p>Please provide accurate information as it appears on your official documents.</p>
+    <div class="px-7 pb-10 pt-[34px] max-sm:px-5 max-sm:py-7">
+      <header class="mb-10">
+        <h1 id="wizard-heading" class="mb-1.5 text-2xl font-extrabold leading-[27px]">Personal Details</h1>
+        <p class="m-0">Please provide accurate information as it appears on your official documents.</p>
       </header>
-      <div class="field-grid">
+      <div class="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
         <FormField
           v-for="field in fields"
           :id="field.key"
@@ -54,19 +54,9 @@ const fields = computed<PersonalField[]>(() => [
         />
       </div>
     </div>
-    <footer class="wizard-actions">
+    <footer class="flex min-h-[84px] justify-between border-t border-zinc-100 px-7 py-4">
       <BaseButton icon-only label="Back to geography" @click="emit('back')">‹</BaseButton>
       <BaseButton @click="emit('continue')">Continue <span aria-hidden="true">›</span></BaseButton>
     </footer>
   </div>
 </template>
-
-<style scoped>
-.step-content { padding: 34px 28px 40px; }
-header { margin-bottom: 40px; }
-h1 { margin: 0 0 6px; font-size: 24px; font-weight: 800; line-height: 27px; }
-p { margin: 0; }
-.field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.wizard-actions { display: flex; justify-content: space-between; min-height: 84px; padding: 16px 28px; border-top: 1px solid var(--gray-100); }
-@media (max-width: 640px) { .field-grid { grid-template-columns: 1fr; } .step-content { padding: 28px 20px; } }
-</style>

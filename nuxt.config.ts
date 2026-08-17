@@ -1,8 +1,10 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  css: ['~/assets/css/main.css'],
-  modules: ['@nuxt/eslint'],
+  modules: ['@nuxt/eslint', '@nuxtjs/tailwindcss'],
+  tailwindcss: {
+    cssPath: '~/assets/css/main.css'
+  },
   runtimeConfig: {
     restCountriesApiKey: '',
     restCountriesApiBase: 'https://api.restcountries.com/countries/v5'

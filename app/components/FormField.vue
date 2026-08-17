@@ -18,11 +18,11 @@ const emit = defineEmits<{ 'update:modelValue': [value: string] }>()
 </script>
 
 <template>
-  <div class="form-field">
-    <label :for="id">{{ label }}</label>
-    <div class="input-wrap" :class="{ invalid: error, prefixed: prefix }">
-      <div v-if="prefix" class="prefix" aria-hidden="true">
-        <img v-if="flagUrl" :src="flagUrl" alt="">
+  <div class="min-w-0">
+    <label class="mb-1.5 block font-medium" :for="id">{{ label }}</label>
+    <div class="flex min-h-[58px] overflow-hidden rounded-[10px] border border-zinc-200 bg-white shadow-card focus-within:border-primary-600 focus-within:ring-4 focus-within:ring-primary-600/10" :class="{ '!border-error-500': error }">
+      <div v-if="prefix" class="flex items-center gap-2 whitespace-nowrap pl-3.5 text-zinc-700" aria-hidden="true">
+        <img v-if="flagUrl" class="size-6 rounded-full object-cover" :src="flagUrl" alt="">
         <span>{{ prefix }}</span>
       </div>
       <input
@@ -34,22 +34,10 @@ const emit = defineEmits<{ 'update:modelValue': [value: string] }>()
         :aria-describedby="error ? `${id}-error` : undefined"
         :max="max"
         :autocomplete="autocomplete"
+        class="w-full min-w-0 border-0 bg-transparent p-3.5 text-black outline-none placeholder:text-zinc-400"
         @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
       >
     </div>
-    <p v-if="error" :id="`${id}-error`" class="field-error">{{ error }}</p>
+    <p v-if="error" :id="`${id}-error`" class="mt-1.5 text-xs text-error-600">{{ error }}</p>
   </div>
 </template>
-
-<style scoped>
-.form-field { min-width: 0; }
-label { display: block; margin-bottom: 6px; font-weight: 500; }
-.input-wrap { display: flex; min-height: 58px; overflow: hidden; background: var(--white); border: 1px solid var(--gray-200); border-radius: 10px; box-shadow: var(--shadow-card); }
-.input-wrap:focus-within { border-color: var(--primary-600); box-shadow: 0 0 0 3px rgb(79 0 208 / 12%); }
-.input-wrap.invalid { border-color: var(--error-500); }
-input { width: 100%; min-width: 0; padding: 14px; color: var(--black); background: transparent; border: 0; outline: 0; }
-input::placeholder { color: var(--gray-400); }
-.prefix { display: flex; align-items: center; gap: 8px; padding-left: 14px; color: var(--gray-700); white-space: nowrap; }
-.prefix img { width: 24px; height: 24px; object-fit: cover; border-radius: 50%; }
-.field-error { margin: 6px 0 0; color: var(--error-600); font-size: 12px; }
-</style>
