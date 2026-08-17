@@ -13,7 +13,7 @@ const steps = [
 </script>
 
 <template>
-  <nav class="flex min-h-[68px] items-center gap-6 bg-primary-25 px-7 py-5 text-primary-200 max-sm:gap-2.5 max-sm:p-4" aria-label="Application progress">
+  <nav class="flex min-h-[68px] items-center gap-6 rounded-t-[15px] bg-primary-25 px-7 py-5 text-primary-200 max-sm:gap-2.5 max-sm:p-4" aria-label="Application progress">
     <template v-for="(step, index) in steps" :key="step.label">
       <div
         class="flex flex-none items-center gap-1.5 font-medium"

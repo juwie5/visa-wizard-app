@@ -34,7 +34,7 @@ onMounted(() => {
     <AppHeader />
     <main class="mx-auto my-11 w-[min(880px,calc(100%-40px))]">
       <p v-if="submissionMessage" class="mb-4 rounded-lg border border-success-200 bg-success-50 px-4 py-3 text-success-700" role="status">✓ {{ submissionMessage }}</p>
-      <section class="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-card" aria-labelledby="wizard-heading">
+      <section class="overflow-visible rounded-2xl border border-zinc-200 bg-white shadow-card" aria-labelledby="wizard-heading">
         <WizardStepper :current-step="currentStep" />
         <div v-if="countriesError" class="flex items-center justify-between bg-error-50 px-7 py-3 text-error-600" role="alert">
           <span>{{ countriesError }}</span>
