@@ -9,13 +9,24 @@ const emit = defineEmits<{
 }>()
 
 const today = new Date().toISOString().slice(0, 10)
-const fields = computed(() => [
+interface PersonalField {
+  key: 'fullName' | 'email' | 'phone' | 'dateOfBirth' | 'passportNumber'
+  label: string
+  type?: string
+  autocomplete?: string
+  placeholder?: string
+  prefix?: string
+  flagUrl?: string
+  max?: string
+}
+
+const fields = computed<PersonalField[]>(() => [
   { key: 'fullName', label: 'Full Name', autocomplete: 'name', placeholder: 'Enter full name' },
   { key: 'email', label: 'Email Address', type: 'email', autocomplete: 'email', placeholder: 'you@example.com' },
   { key: 'phone', label: 'Phone Number', type: 'tel', autocomplete: 'tel-national', placeholder: 'Phone number', prefix: props.form.citizenship?.callingCode || '+', flagUrl: props.form.citizenship?.flagUrl },
   { key: 'dateOfBirth', label: 'Date of Birth', type: 'date', autocomplete: 'bday', max: today },
   { key: 'passportNumber', label: 'Passport Number', autocomplete: 'off', placeholder: 'Enter passport number' }
-] as const)
+])
 </script>
 
 <template>

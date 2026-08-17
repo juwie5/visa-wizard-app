@@ -49,7 +49,7 @@ function onKeydown(event: KeyboardEvent) {
   }
   if (event.key === 'Enter' && results.value[activeIndex.value]) {
     event.preventDefault()
-    select(results.value[activeIndex.value])
+    select(results.value[activeIndex.value]!)
   }
 }
 

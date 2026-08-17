@@ -1,5 +1,6 @@
 import type { FieldErrors, VisaFormData, WizardStep } from '~/types/visa'
 import { validateGeography, validatePersonalDetails } from '~/utils/validation'
+import { reactive, ref } from 'vue'
 
 function emptyForm(): VisaFormData {
   return {
