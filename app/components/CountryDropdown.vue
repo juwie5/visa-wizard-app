@@ -80,7 +80,7 @@ onBeforeUnmount(() => document.removeEventListener('mousedown', closeOnOutside))
       >
         <span v-if="modelValue" class="flex min-w-0 items-center gap-2.5">
           <img class="size-6 rounded-full object-cover" :src="modelValue.flagUrl" :alt="modelValue.flagAlt">
-          <span class="flex min-w-0 flex-col"><strong class="truncate font-medium">{{ modelValue.name }}</strong><small class="text-[11px] text-zinc-500">{{ modelValue.capital }}</small></span>
+          <strong class="min-w-0 truncate font-medium">{{ modelValue.name }}</strong>
         </span>
         <span v-else class="text-zinc-400">Select a country...</span>
         <span class="relative ml-auto size-[18px] flex-none rounded-full border-[1.5px] border-zinc-500 after:absolute after:-bottom-0.5 after:-right-1 after:w-1.5 after:rotate-45 after:border-t-[1.5px] after:border-zinc-500" aria-hidden="true" />

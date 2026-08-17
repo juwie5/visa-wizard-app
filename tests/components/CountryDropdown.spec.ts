@@ -24,6 +24,15 @@ describe('CountryDropdown', () => {
     expect(wrapper.findAll('.option')[0]?.attributes('disabled')).toBeDefined()
   })
 
+  it('does not show the capital for a selected country', async () => {
+    const wrapper = await mountSuspended(CountryDropdown, {
+      props: { id: 'citizenship', label: 'Citizenship', countries: [germany], modelValue: germany }
+    })
+
+    expect(wrapper.text()).toContain('Germany')
+    expect(wrapper.text()).not.toContain('Berlin')
+  })
+
   it('shows countries beyond the first page of alphabetical results', async () => {
     const countries = Array.from({ length: 50 }, (_, index) => ({
       ...canada,
