@@ -12,7 +12,7 @@ function submittedDate(value: string) {
 <template>
   <section class="mt-16 font-display max-sm:mt-9" aria-labelledby="submissions-heading">
     <header class="mb-5 flex items-center justify-between">
-      <h2 id="submissions-heading" class="m-0 text-lg leading-[27px]">Recent Submissions</h2>
+      <h2 id="submissions-heading" class="m-0 text-lg leading-[27px] font-semibold">Recent Submissions</h2>
       <span>{{ applications.length }} {{ applications.length === 1 ? 'Record' : 'Records' }}</span>
     </header>
     <div v-if="!applications.length" class="grid min-h-[153px] place-content-center place-items-center gap-2 rounded-[10px] border border-dashed border-zinc-200">
