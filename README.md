@@ -11,7 +11,7 @@ A responsive multi-step travel visa application built with Nuxt 4, Vue 3, TypeSc
 - Hand-written inline validation with state preserved across steps
 - Session-persisted application history with fixed random statuses
 - Responsive layout, transitions, loading/error/empty states, and retry support
-- Unit tests for utilities, a composable, and the country dropdown
+- Unit and interaction tests for utilities, API states, persistence, wizard navigation, review, badges, phone input, and country dropdowns
 - Production Docker image and Netlify configuration
 
 ## Local development
@@ -32,7 +32,7 @@ Add your REST Countries v5 key to `.env`:
 NUXT_REST_COUNTRIES_API_KEY=your_key_here
 ```
 
-The key stays server-side. Browser requests go through the app's `/api/countries` endpoint.
+The key stays server-side. Browser requests go through the app's `/api/countries` endpoint. The server adapter normalizes v5 calling codes to the assignment-compatible `idd.root`/`idd.suffixes` structure; the phone selector and international-length validation derive their prefix from that `idd` data.
 
 ## Quality checks
 
@@ -47,7 +47,7 @@ npm run build
 
 ```bash
 docker build -t visa-application-wizard .
-docker run --rm -p 3000:3000 visa-application-wizard
+docker run --rm --env-file .env -p 3000:3000 visa-application-wizard
 ```
 
 ## Deployment
@@ -69,7 +69,7 @@ Configure `NUXT_REST_COUNTRIES_API_KEY` in Netlify under **Site configuration â†
 - `app/composables/useVisaWizard.ts` owns form state and step validation.
 - `app/composables/useApplications.ts` creates and session-persists submissions.
 - `app/utils` contains pure country formatting, fuzzy search, and validation helpers.
-- `tests` covers the dropdown, wizard state, normalization/search, and validation.
+- `tests` covers dropdown keyboard interaction and conflicts, wizard state/reset, review rendering, API loading failures/retry/empty responses, session persistence, all status variants, normalization/search, and validation edge cases.
 
 Applications intentionally use `sessionStorage`: records survive refreshes in the same browser tab and are cleared when that tab's session ends.
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Country } from '~/types/visa'
-import { searchCountries } from '~/utils/countries'
+import { buildCallingCode, searchCountries } from '~/utils/countries'
 
 const props = withDefaults(defineProps<{
   id: string
@@ -21,7 +21,7 @@ const root = ref<HTMLElement | null>(null)
 const query = ref('')
 const open = ref(false)
 const activeIndex = ref(0)
-const results = computed(() => searchCountries(props.countries.filter(country => country.callingCode), query.value))
+const results = computed(() => searchCountries(props.countries.filter(country => buildCallingCode(country.idd)), query.value))
 
 function select(country: Country) {
   emit('update:selectedCountry', country)
@@ -75,7 +75,7 @@ onBeforeUnmount(() => document.removeEventListener('mousedown', closeOnOutside))
         @keydown="onKeydown"
       >
         <img v-if="selectedCountry" class="size-6 rounded-full object-cover" :src="selectedCountry.flagUrl" :alt="selectedCountry.flagAlt">
-        <span>{{ selectedCountry?.callingCode || '+' }}</span>
+        <span>{{ buildCallingCode(selectedCountry?.idd) || '+' }}</span>
       </button>
       <input
         :id="id"
@@ -113,7 +113,7 @@ onBeforeUnmount(() => document.removeEventListener('mousedown', closeOnOutside))
           >
             <img class="size-6 rounded-full object-cover" :src="country.flagUrl" :alt="country.flagAlt">
             <strong class="min-w-0 flex-1 truncate font-medium">{{ country.name }}</strong>
-            <span class="text-zinc-500">{{ country.callingCode }}</span>
+            <span class="text-zinc-500">{{ buildCallingCode(country.idd) }}</span>
           </button>
         </div>
       </div>

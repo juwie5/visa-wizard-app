@@ -80,7 +80,10 @@ onBeforeUnmount(() => document.removeEventListener('mousedown', closeOnOutside))
       >
         <span v-if="modelValue" class="flex min-w-0 items-center gap-2.5">
           <img class="size-6 rounded-full object-cover" :src="modelValue.flagUrl" :alt="modelValue.flagAlt">
-          <strong class="min-w-0 truncate font-medium">{{ modelValue.name }}</strong>
+          <span class="min-w-0">
+            <strong class="block truncate font-medium">{{ modelValue.name }}</strong>
+            <span class="block truncate text-xs text-zinc-500">{{ modelValue.capital }}</span>
+          </span>
         </span>
         <span v-else class="text-zinc-400">Select a country...</span>
         <span class="relative ml-auto size-[18px] flex-none rounded-full border-[1.5px] border-zinc-500 after:absolute after:-bottom-0.5 after:-right-1 after:w-1.5 after:rotate-45 after:border-t-[1.5px] after:border-zinc-500" aria-hidden="true" />
@@ -115,7 +118,10 @@ onBeforeUnmount(() => document.removeEventListener('mousedown', closeOnOutside))
               @click="select(country)"
             >
               <img class="size-6 rounded-full object-cover" :src="country.flagUrl" :alt="country.flagAlt">
-              <strong class="min-w-0 truncate font-medium">{{ country.name }}</strong>
+              <span class="min-w-0 flex-1">
+                <strong class="block truncate font-medium">{{ country.name }}</strong>
+                <span class="block truncate text-xs text-zinc-500">{{ country.capital }}</span>
+              </span>
               <span v-if="country.code === disabledCode" class="ml-auto text-[11px] text-zinc-500">Selected</span>
             </button>
           </div>

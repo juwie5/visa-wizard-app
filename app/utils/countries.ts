@@ -20,6 +20,7 @@ export function normalizeCountry(country: RestCountry): Country | null {
     region: country.region ?? 'Unknown region',
     population: country.population ?? 0,
     languages: Object.values(country.languages ?? {}).sort(),
+    idd: country.idd ?? {},
     callingCode: buildCallingCode(country.idd)
   }
 }

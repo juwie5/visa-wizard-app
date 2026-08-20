@@ -32,7 +32,6 @@ const RESPONSE_FIELDS = [
 
 function normalizeV5(country: V5Country): RestCountry {
   const callingCode = country.calling_codes?.[0] ?? ''
-  const rootMatch = callingCode.match(/^\+\d{1,3}/)?.[0] ?? callingCode
 
   return {
     cca3: country.codes?.alpha_3,
@@ -51,8 +50,8 @@ function normalizeV5(country: V5Country): RestCountry {
         .filter((entry): entry is [string, string] => Boolean(entry[1]))
     ),
     idd: {
-      root: rootMatch,
-      suffixes: callingCode.startsWith(rootMatch) ? [callingCode.slice(rootMatch.length)] : []
+      root: callingCode,
+      suffixes: []
     }
   }
 }

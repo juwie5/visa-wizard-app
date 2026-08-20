@@ -28,6 +28,11 @@ describe('visa validation', () => {
     expect(validatePersonalDetails({ ...validForm, passportNumber: 'A-1234567' }, new Date('2026-01-01')).passportNumber).toBeUndefined()
   })
 
+  it('validates the complete international phone length using the selected country idd', () => {
+    expect(validatePersonalDetails({ ...validForm, phone: '123456789012345' }, new Date('2026-01-01')).phone).toContain('selected country code')
+    expect(validatePersonalDetails({ ...validForm, phoneCountry: { ...germany, idd: {}, callingCode: '' } }, new Date('2026-01-01')).phone).toContain('calling code')
+  })
+
   it('returns field-specific errors for invalid details', () => {
     const errors = validatePersonalDetails({ ...validForm, fullName: 'Ada', email: 'bad', phone: '1', dateOfBirth: '2030-01-01', passportNumber: '!@' }, new Date('2026-01-01'))
     expect(Object.keys(errors)).toEqual(expect.arrayContaining(['fullName', 'email', 'phone', 'dateOfBirth', 'passportNumber']))

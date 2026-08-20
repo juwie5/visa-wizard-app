@@ -11,7 +11,7 @@ describe('CountryDropdown', () => {
     await wrapper.get('.select-control').trigger('click')
     await wrapper.get('input').setValue('Grmany')
     expect(wrapper.text()).toContain('Germany')
-    expect(wrapper.text()).not.toContain('Berlin')
+    expect(wrapper.text()).toContain('Berlin')
     await wrapper.get('.option').trigger('click')
     expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([germany])
   })
@@ -24,13 +24,25 @@ describe('CountryDropdown', () => {
     expect(wrapper.findAll('.option')[0]?.attributes('disabled')).toBeDefined()
   })
 
-  it('does not show the capital for a selected country', async () => {
+  it('supports opening, navigating, and selecting with the keyboard', async () => {
+    const wrapper = await mountSuspended(CountryDropdown, {
+      props: { id: 'citizenship', label: 'Citizenship', countries: [canada, germany], modelValue: null }
+    })
+    const control = wrapper.get('.select-control')
+    await control.trigger('keydown', { key: 'ArrowDown' })
+    await control.trigger('keydown', { key: 'ArrowDown' })
+    await control.trigger('keydown', { key: 'Enter' })
+
+    expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([germany])
+  })
+
+  it('shows the capital for a selected country', async () => {
     const wrapper = await mountSuspended(CountryDropdown, {
       props: { id: 'citizenship', label: 'Citizenship', countries: [germany], modelValue: germany }
     })
 
     expect(wrapper.text()).toContain('Germany')
-    expect(wrapper.text()).not.toContain('Berlin')
+    expect(wrapper.text()).toContain('Berlin')
   })
 
   it('shows countries beyond the first page of alphabetical results', async () => {

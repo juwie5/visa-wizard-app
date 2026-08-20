@@ -10,6 +10,7 @@ export interface Country {
   region: string
   population: number
   languages: string[]
+  idd: NonNullable<RestCountry['idd']>
   callingCode: string
 }
 
