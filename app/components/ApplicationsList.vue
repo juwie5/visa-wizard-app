@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { VisaApplication } from '~/types/visa'
+import routeArrowIcon from '~/assets/images/route-arrow.svg'
 
 defineProps<{ applications: VisaApplication[] }>()
 
@@ -25,7 +26,14 @@ function submittedDate(value: string) {
             <img class="size-[26px] rounded-full border-2 border-white object-cover" :src="application.citizenship.flagUrl" :alt="application.citizenship.flagAlt">
             <img class="size-[26px] rounded-full border-2 border-white object-cover" :src="application.destination.flagUrl" :alt="application.destination.flagAlt">
           </div>
-          <div class="flex min-w-0 flex-col"><small class="text-[11px] text-zinc-500">{{ application.applicant.fullName }}</small><strong class="truncate">{{ application.citizenship.name }} → {{ application.destination.name }}</strong></div>
+          <div class="flex min-w-0 flex-col">
+            <small class="text-[11px] text-zinc-500">{{ application.applicant.fullName }}</small>
+            <strong class="flex min-w-0 items-center gap-1.5">
+              <span class="truncate">{{ application.citizenship.name }}</span>
+              <img class="h-[11px] w-3.5 flex-none" :src="routeArrowIcon" alt="">
+              <span class="truncate">{{ application.destination.name }}</span>
+            </strong>
+          </div>
         </div>
         <div class="flex min-w-0 flex-col items-start gap-0 max-sm:col-start-1 max-sm:row-start-2"><small class="text-[11px] text-zinc-500">Submitted</small><strong>{{ submittedDate(application.submittedAt) }}</strong></div>
         <StatusBadge :status="application.status" />
