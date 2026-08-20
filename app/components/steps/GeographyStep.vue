@@ -46,12 +46,15 @@ const emit = defineEmits<{
           @update:model-value="emit('update:destination', $event)"
         />
       </div>
-      <div v-if="citizenship && destination" class="mt-4 flex min-h-[61px] items-center gap-4 rounded-lg border border-success-200 bg-success-50 px-4 py-3">
+      <div v-if="citizenship && destination" class="mt-4 flex min-h-[61px] items-center gap-4 rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3">
         <div class="relative h-[30px] w-[50px]">
           <img class="absolute size-7 rounded-full border-2 border-white object-cover" :src="citizenship.flagUrl" :alt="citizenship.flagAlt">
           <img class="absolute left-[21px] size-7 rounded-full border-2 border-white object-cover" :src="destination.flagUrl" :alt="destination.flagAlt">
         </div>
-        <div class="flex flex-1 flex-col"><strong class="text-xs text-success-700">Route Validated</strong><span>{{ citizenship.name }} → {{ destination.name }}</span></div>
+        <div class="flex flex-1 flex-col">
+          <span class="text-xs text-zinc-700">Route Validated</span>
+          <strong class="font-semibold">{{ citizenship.name }} <span class="mx-1 font-normal" aria-hidden="true">→</span> {{ destination.name }}</strong>
+        </div>
         <span class="grid size-6 place-items-center rounded-full bg-success-600 text-white" aria-hidden="true">✓</span>
       </div>
     </div>
