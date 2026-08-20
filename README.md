@@ -14,6 +14,9 @@ A responsive multi-step travel visa application built with Nuxt 4, Vue 3, TypeSc
 - Unit tests for utilities, a composable, and the country dropdown
 - Production Docker image and Netlify configuration
 
+## Live Demo Link
+- https://visa-wizard-app.netlify.app
+  
 ## Local development
 
 Requirements: Node.js 20.19+ and npm 10+.
