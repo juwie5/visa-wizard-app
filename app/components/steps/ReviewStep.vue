@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { VisaFormData } from '~/types/visa'
+import backIcon from '~/assets/images/alt-arrow-left.svg'
 import { formatDate } from '~/utils/countries'
 
 defineProps<{ form: VisaFormData }>()
@@ -32,7 +33,7 @@ const emit = defineEmits<{ back: [], submit: [] }>()
       </div>
     </div>
     <footer class="flex min-h-20 justify-between border-t border-zinc-100 px-7 py-4">
-      <BaseButton icon-only label="Back to personal details" @click="emit('back')">‹</BaseButton>
+      <BaseButton icon-only label="Back to personal details" @click="emit('back')"><img class="size-6" :src="backIcon" alt=""></BaseButton>
       <BaseButton @click="emit('submit')">Submit Application <span aria-hidden="true">›</span></BaseButton>
     </footer>
   </div>

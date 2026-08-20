@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Country, FieldErrors, VisaFormData } from '~/types/visa'
+import backIcon from '~/assets/images/alt-arrow-left.svg'
 import continueIcon from '~/assets/images/alt-arrow-right.svg'
 
 defineProps<{ form: VisaFormData, errors: FieldErrors, countries: Country[], countriesPending: boolean }>()
@@ -66,7 +67,7 @@ const fields: PersonalField[] = [
       </div>
     </div>
     <footer class="flex min-h-[84px] justify-between border-t border-zinc-100 px-7 py-4">
-      <BaseButton icon-only label="Back to geography" @click="emit('back')">‹</BaseButton>
+      <BaseButton icon-only label="Back to geography" @click="emit('back')"><img class="size-6" :src="backIcon" alt=""></BaseButton>
       <BaseButton @click="emit('continue')">Continue <img class="size-5" :src="continueIcon" alt=""></BaseButton>
     </footer>
   </div>
