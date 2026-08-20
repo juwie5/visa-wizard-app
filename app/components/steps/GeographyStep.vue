@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Country, FieldErrors } from '~/types/visa'
+import continueIcon from '~/assets/images/alt-arrow-right.svg'
 
 defineProps<{
   countries: Country[]
@@ -55,7 +56,7 @@ const emit = defineEmits<{
       </div>
     </div>
     <footer class="flex min-h-20 justify-end border-t border-zinc-100 px-7 py-4">
-      <BaseButton @click="emit('continue')">Continue <span aria-hidden="true">›</span></BaseButton>
+      <BaseButton @click="emit('continue')">Continue <img class="size-5" :src="continueIcon" alt=""></BaseButton>
     </footer>
   </div>
 </template>
