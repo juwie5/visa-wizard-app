@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Country, FieldErrors } from '~/types/visa'
+import checkCircleIcon from '~/assets/images/check-circle.svg'
 import continueIcon from '~/assets/images/alt-arrow-right.svg'
 
 defineProps<{
@@ -55,7 +56,7 @@ const emit = defineEmits<{
           <span class="text-xs text-zinc-700">Route Validated</span>
           <strong class="font-semibold">{{ citizenship.name }} <span class="mx-1 font-normal" aria-hidden="true">→</span> {{ destination.name }}</strong>
         </div>
-        <span class="grid size-6 place-items-center rounded-full bg-success-600 text-white" aria-hidden="true">✓</span>
+        <img class="size-6" :src="checkCircleIcon" alt="">
       </div>
     </div>
     <footer class="flex min-h-20 justify-end border-t border-zinc-100 px-7 py-4">
