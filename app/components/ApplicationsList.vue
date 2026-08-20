@@ -10,7 +10,7 @@ function submittedDate(value: string) {
 </script>
 
 <template>
-  <section class="mt-16 max-sm:mt-9" aria-labelledby="submissions-heading">
+  <section class="mt-16 font-display max-sm:mt-9" aria-labelledby="submissions-heading">
     <header class="mb-5 flex items-center justify-between">
       <h2 id="submissions-heading" class="m-0 text-lg leading-[27px]">Recent Submissions</h2>
       <span>{{ applications.length }} {{ applications.length === 1 ? 'Record' : 'Records' }}</span>
